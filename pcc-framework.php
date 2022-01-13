@@ -89,8 +89,8 @@ foreach ([
     'participants-button',
     'program-button',
     'recent-content',
-    'social-links',
     'projects',
+    'social-links',
 ] as $block) {
     require_once dirname(__FILE__) . "/lib/blocks/$block.php";
     $pieces = explode('-', $block);
