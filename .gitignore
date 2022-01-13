@@ -10,5 +10,3 @@ wordpress/
 *.sql
 *.tar.gz
 *.zip
-
-!build/index.js
