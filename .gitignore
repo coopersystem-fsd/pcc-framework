@@ -3,10 +3,12 @@ phpcs.xml
 phpunit.xml
 Thumbs.db
 wp-cli.local.yml
-build/
+build/*
 node_modules/
 vendor/
 wordpress/
 *.sql
 *.tar.gz
 *.zip
+
+!build/index.js
