@@ -48,12 +48,12 @@ function render_callback($attributes)
                         <div class="project__details">
                         <header class="text">
                             <h2 class="title">
-                            <a href="{!! $project['page_link_id'] !!}">{!! $project['title'] !!}</a>
+                            <a href="{{ $project['page_link_id'] }}">{{ $project['title'] }}</a>
                             </h2>
-                            <p class="desc">{!! $project['content'] !!}</p>
+                            <p class="desc">{{ $project['content'] }}</p>
                         </header>
                         </div>
-                        <figure>{!! wp_get_attachment_image($project['image'], 'medium') !!}</figure>
+                        <figure>{{ wp_get_attachment_image($project['image'], 'medium') }}</figure>
                     </article>
                     <?php } ?>
                 </ul>
