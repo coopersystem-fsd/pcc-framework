@@ -50,7 +50,9 @@ function render_callback($attributes)
                                     <h2 class="title">
                                         <a href="<?= $project['page_link_id'] ?>"><?= $project['title'] ?></a>
                                     </h2>
-                                    <p class="desc"><?= $project['content'] ?></p>
+                                    <div class="desc">
+                                        <?= $project['content'] ?>
+                                    </div>
                                 </header>
                             </div>
                             <figure><?= wp_get_attachment_image($project['image'], 'medium') ?></figure>
