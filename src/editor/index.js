@@ -12,6 +12,7 @@ whitelistBlocks( [
 	'pcc/participants-button',
 	'pcc/program-button',
 	'pcc/recent-content',
+	'pcc/projects',
 	'pcc/social-links',
 	'core/paragraph',
 	'core/image',

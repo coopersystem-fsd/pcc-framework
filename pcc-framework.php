@@ -89,6 +89,7 @@ foreach ([
     'participants-button',
     'program-button',
     'recent-content',
+    'projects',
     'social-links',
 ] as $block) {
     require_once dirname(__FILE__) . "/lib/blocks/$block.php";
