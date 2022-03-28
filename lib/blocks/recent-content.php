@@ -38,6 +38,8 @@ function render_callback($attributes)
     $recent = new \WP_Query([
         'post_type' => 'post',
         'showposts' => 6,
+        'orderby' => 'date',
+        'order'   => 'DESC',
     ]);
 
     $output = '';
