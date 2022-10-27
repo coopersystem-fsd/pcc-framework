@@ -2,6 +2,12 @@
 
 namespace PCCFramework\Import_Users_Csv\Metabox;
 
+
+/**
+ * Add event metabox in user profile and user event column in users table.
+ *
+ * @return void
+ */
 function user_settings()
 {
     $cmb = new_cmb2_box([
@@ -25,6 +31,12 @@ function user_settings()
 }
 
 
+/**
+ * Custom callback to return event list in user profile.
+ *
+ * @param array $query_args
+ * @return array
+ */
 function user_event_list($query_args)
 {
 
@@ -48,6 +60,13 @@ function user_event_list($query_args)
 }
 
 
+/**
+ * Custom callback to display user events in the users table.
+ *
+ * @param object $field_args
+ * @param object $field
+ * @return void
+ */
 function user_event_list_column($field_args, $field)
 {
     if ($field->escaped_value() && is_array($field->escaped_value())) :

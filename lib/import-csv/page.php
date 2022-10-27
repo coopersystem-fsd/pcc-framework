@@ -4,6 +4,13 @@ namespace PCCFramework\Import_Users_Csv\Page;
 
 use function PCCFramework\Import_Users_Csv\Functions\get_default_text;
 
+
+/**
+ * Add a subpage to the users page.
+ *
+ * @link https://developer.wordpress.org/reference/functions/add_submenu_page/
+ * @return void
+ */
 function init()
 {
     add_submenu_page(
@@ -16,6 +23,12 @@ function init()
     );
 }
 
+
+/**
+ * Callback with subpage content for importing CSV files and email message settings.
+ *
+ * @return void
+ */
 function content_page()
 {
     if (!current_user_can('create_users')) {
@@ -45,6 +58,12 @@ function content_page()
     <?php
 }
 
+
+/**
+ * HTML for CSV file import tab.
+ *
+ * @return void
+ */
 function import_file_tab()
 { ?>
         <div class="card">
@@ -63,6 +82,12 @@ function import_file_tab()
     <?php
 }
 
+
+/**
+ * HTML for e-mail settings tab.
+ *
+ * @return void
+ */
 function settings_tab()
 {
     $new_user_subject = !empty(get_option('user_csv_new_user_subject')) ? get_option('user_csv_new_user_subject') : get_default_text('user_subject');

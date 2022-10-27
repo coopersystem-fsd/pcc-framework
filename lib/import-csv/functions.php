@@ -2,6 +2,12 @@
 
 namespace PCCFramework\Import_Users_Csv\Functions;
 
+
+/**
+ * Reads a CSV file and creates a new user and includes the user in an event.
+ *
+ * @return void
+ */
 function read_csv()
 {
 
@@ -105,6 +111,15 @@ function read_csv()
     endif;
 }
 
+
+/**
+ * Sends an email with the user's credentials after being created.
+ *
+ * @param string $user_email
+ * @param string $username
+ * @param string $password
+ * @return void
+ */
 function send_email_user_created($user_email, $username, $password)
 {
     $subject = !empty(get_option('user_csv_new_user_subject')) ? get_option('user_csv_new_user_subject') : get_default_text('user_subject');
@@ -131,6 +146,14 @@ function send_email_user_created($user_email, $username, $password)
 }
 
 
+/**
+ * Sends an email with information about the event in which the user was entered.
+ *
+ * @param string $user_email
+ * @param string $username
+ * @param int $event_id
+ * @return void
+ */
 function send_email_user_event($user_email, $username, $event_id)
 {
     $subject = !empty(get_option('user_csv_new_event_subject')) ? get_option('user_csv_new_event_subject') : get_default_text('event_subject');
@@ -163,6 +186,12 @@ function send_email_user_event($user_email, $username, $event_id)
 }
 
 
+/**
+ * Format results after reading and completion of CSV file import and returns an HTML string.
+ *
+ * @param array $results
+ * @return string
+ */
 function format_results($results)
 {
     $html = '';
@@ -186,6 +215,12 @@ function format_results($results)
     return $html;
 }
 
+
+/**
+ * Save email message settings.
+ *
+ * @return void
+ */
 function save_settings()
 {
     if (isset($_POST['save-user-csv-settings'])) {
@@ -201,6 +236,14 @@ function save_settings()
     }
 }
 
+
+/**
+ * Checks if the event ID is valid, it can be the Post ID or a unique value created on 
+ * the event page in the Open Collective event ID. It returns the Post ID or false.
+ *
+ * @param int|string $event_id
+ * @return int!false
+ */
 function is_valid_event($event_id)
 {
     if (!$event_id) return false;
@@ -225,6 +268,15 @@ function is_valid_event($event_id)
     return get_post_type($event_id) === 'pcc-event' ? $event_id : false;
 }
 
+
+
+/**
+ * Returns the default messages for sending emails
+ *
+ * @param string $type user_subject, event_subject, user_message or event_message depending 
+ * on whether the email is user creation or user inclusion in a certain event.
+ * @return string
+ */
 function get_default_text($type)
 {
     if ($type === 'user_subject') {
@@ -256,6 +308,14 @@ function get_default_text($type)
     }
 }
 
+
+
+/**
+ * Removes extra backslashes from email messages.
+ *
+ * @param string $string
+ * @return string
+ */
 function removeslashes($string)
 {
     $string = implode("", explode("\\", $string));
@@ -263,7 +323,16 @@ function removeslashes($string)
 }
 
 
-
+/**
+ * Sends email to the user if he is manually added to an event through the user profile.
+ *
+ * @link https://developer.wordpress.org/reference/hooks/update_meta_type_metadata/
+ * @param null|bool $check
+ * @param int $user_id
+ * @param mixed $meta_key
+ * @param mixed $meta_value
+ * @return bool
+ */
 add_filter('update_user_metadata', function ($check, $user_id, $meta_key, $meta_value) {
 
     if ($meta_key == 'event_ids') {
