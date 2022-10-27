@@ -116,6 +116,7 @@ if (is_admin()) {
     add_action('cmb2_admin_init', '\\PCCFramework\\PostTypes\\Story\\data');
     add_action('cmb2_admin_init', '\\PCCFramework\\Settings\\configuration');
     add_action('cmb2_admin_init', '\\PCCFramework\\Settings\\localization');
+    add_action('cmb2_admin_init', '\\PCCFramework\\Import_Users_Csv\\Metabox\\user_settings');
     add_filter('attachment_fields_to_edit', '\\PCCFramework\\PostTypes\\Attachment\\data', 10, 2);
     add_action('edit_attachment', '\\PCCFramework\\PostTypes\\Attachment\\save');
 }
@@ -125,8 +126,51 @@ add_action('init', '\\PCCFramework\\Intervention\\apply_interventions');
 
 
 /**
+ * Load admin assets and metadata fields.
+ */
+require_once dirname(__FILE__) . '/lib/import-csv/page.php';
+require_once dirname(__FILE__) . '/lib/import-csv/metabox.php';
+require_once dirname(__FILE__) . '/lib/import-csv/functions.php';
+
+add_action('admin_menu', '\\PCCFramework\\Import_Users_Csv\\Page\\init');
+add_action('init', '\\PCCFramework\\Import_Users_Csv\\Functions\\save_settings');
+
+
+
+/**
  * Register new embed providers.
  */
 require_once dirname(__FILE__) . "/lib/embeds.php";
 
 PCCFramework\Embeds\init_livestream();
+
+
+/**
+ * Add ID column to Events admin page
+ */
+add_filter('manage_pcc-event_posts_columns', function($columns) {
+    $new_columns = [];
+    $event_id = __('ID', 'pcc-framework');
+
+    foreach($columns as $key=>$value) {
+        if($key=='title') { 
+           $new_columns['event_id'] = $event_id; 
+        }    
+        $new_columns[$key]=$value;
+    }  
+
+    return $new_columns;
+});
+ 
+add_action('manage_pcc-event_posts_custom_column', function($column_key, $post_id) {
+	if ($column_key == 'event_id') {
+		echo $post_id;
+	}
+}, 10, 2);
+
+add_action('admin_head', function () {
+    echo '<style type="text/css">';
+    echo '.column-event_id { width:60px !important; }';
+    echo '</style>';
+});
+
