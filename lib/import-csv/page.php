@@ -15,8 +15,8 @@ function init()
 {
     add_submenu_page(
         'users.php',
-        __('Import Users', 'pcc-framework'),
-        __('Import Users', 'pcc-framework'),
+        __('Import users from CSV', 'pcc-framework'),
+        __('Import users CSV', 'pcc-framework'),
         'create_users',
         'platformcoop_import_user',
         '\\PCCFramework\\Import_Users_Csv\\Page\\content_page'
@@ -39,7 +39,7 @@ function content_page()
     $tab = isset($_GET['tab']) ? $_GET['tab'] : $default_tab; ?>
 
     <div class="wrap">
-        <h1><?php _e('Import Users', 'pcc-framework'); ?></h1>
+        <h1><?php _e('Import users from CSV', 'pcc-framework'); ?></h1>
         <nav class="nav-tab-wrapper">
             <a href="?page=platformcoop_import_user" class="nav-tab <?php if ($tab === null) : ?>nav-tab-active<?php endif; ?>"><?php _e('Import file', 'pcc-framework'); ?></a>
             <a href="?page=platformcoop_import_user&tab=settings" class="nav-tab <?php if ($tab === 'settings') : ?>nav-tab-active<?php endif; ?>"><?php _e('E-mail settings', 'pcc-framework'); ?></a>
@@ -68,7 +68,11 @@ function import_file_tab()
 { ?>
         <div class="card">
             <h2><?php _e('Instructions', 'pcc-framework'); ?></h2>
-            <p><?php _e('The file MUST have "email" column for importing users.', 'pcc-framework'); ?></p>
+            <p><?php _e('Allowed columns: <b>email</b>, <b>event_id</b>, <b>username</b>, <b>fist_name</b>, <b>last_name</b>.', 'pcc-framework'); ?></p>
+            <p><?php _e('The file <b>MUST</b> have <b>email</b> column for importing users.', 'pcc-framework'); ?></p>
+            <p><?php _e('If the <b>event_id</b> column does not exist or if the user does not have an event id in the file, the user will be created but not linked to the event.', 'pcc-framework'); ?></p>
+            <p><?php _e('The columns <b>username</b>, <b>fist_name</b>, <b>last_name</b> are optional.', 'pcc-framework'); ?></p>
+            <p><?php _e('If the <b>username</b> column does not exist, the username will be generated from the email.', 'pcc-framework'); ?></p>
             <form method='post' action='<?= $_SERVER['REQUEST_URI']; ?>' enctype='multipart/form-data'>
                 <p><input type="file" name="import_file"></p>
                 <p class="submit"><input type="submit" name="importcsv" id="importcsv" class="button button-secondary" value="Load File"></p>
