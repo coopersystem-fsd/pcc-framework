@@ -179,6 +179,7 @@ function data()
             'conference' => __('PCC Conference', 'pcc-framework'),
             'pcc' => __('PCC Event', 'pcc-framework'),
             'icde' => __('ICDE Event', 'pcc-framework'),
+            'course' => __('Course', 'pcc-framework'),
         ],
         'show_on_cb' => 'PCCFramework\PostTypes\Event\is_parent_event',
         'description' =>
