@@ -2,6 +2,7 @@
 
 namespace PCCFramework\Import_Users_Csv\Functions;
 
+use SebastianBergmann\Environment\Console;
 
 /**
  * Reads a CSV file and creates a new user and includes the user in an event.
@@ -29,7 +30,8 @@ function read_csv()
 
             $email_index = array_search('email', $csv_headers);
 
-            if ($email_index == false) {
+            var_dump($email_index);
+            if ($email_index === false) {
                 return [
                     'errors' => [__('Column "email" not found!', 'pcc-framework')]
                 ];
