@@ -23,7 +23,8 @@ function read_csv()
 
             $csv_file = fopen($_FILES['import_file']['tmp_name'], 'r');
 
-            $csv_headers = fgetcsv($csv_file);
+            $delimiter = detect_delimiter($_FILES['import_file']['tmp_name']);
+            $csv_headers = fgetcsv($csv_file, null, $delimiter);
 
 
             $email_index = array_search('email', $csv_headers);
@@ -93,7 +94,7 @@ function read_csv()
                         continue;
                     }
 
-                    $errors[] = __("The user '$email' was created but was not associated with event ID ($event_id) because the ID is not valid", 'pcc-framework');
+                    $warnings[] = __("The user '$email' was created but was not associated with event ID ($event_id) because the ID is not valid", 'pcc-framework');
                     continue;
                 }
 
@@ -109,6 +110,27 @@ function read_csv()
 
         endif;
     endif;
+}
+
+
+/**
+ * Detect CSV delimiter
+ *
+ * @param string $csv_file
+ * @return string
+ */
+function detect_delimiter($csv_file)
+{
+    $delimiters = [';' => 0, ',' => 0, '\t' => 0, '|' => 0];
+
+    $handle = fopen($csv_file, 'r');
+    $firstLine = fgets($handle);
+    fclose($handle); 
+    foreach ($delimiters as $delimiter => &$count) {
+        $count = count(str_getcsv($firstLine, $delimiter));
+    }
+
+    return array_search(max($delimiters), $delimiters);
 }
 
 
