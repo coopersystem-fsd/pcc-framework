@@ -97,7 +97,7 @@ function data()
         'id' => $prefix . 'start',
         'type' => 'text_datetime_timestamp',
         'description' =>
-            __('The date and time at which the event begins.', 'pcc-framework'),
+        __('The date and time at which the event begins.', 'pcc-framework'),
     ]);
 
     $cmb->add_field([
@@ -105,7 +105,7 @@ function data()
         'id' => $prefix . 'end',
         'type' => 'text_datetime_timestamp',
         'description' =>
-            __('The date and time at which the event ends.', 'pcc-framework'),
+        __('The date and time at which the event ends.', 'pcc-framework'),
     ]);
 
     $cmb->add_field([
@@ -113,7 +113,7 @@ function data()
         'id'   => $prefix . 'venue',
         'type' => 'textarea_small',
         'description' =>
-            __('The name of the event&rsquo;s principal venue.', 'pcc-framework'),
+        __('The name of the event&rsquo;s principal venue.', 'pcc-framework'),
     ]);
 
     $cmb->add_field([
@@ -121,7 +121,7 @@ function data()
         'id'   => $prefix . 'venue_street_address',
         'type' => 'text',
         'description' =>
-            __('The street address of the event&rsquo;s principal venue.', 'pcc-framework'),
+        __('The street address of the event&rsquo;s principal venue.', 'pcc-framework'),
     ]);
 
     $cmb->add_field([
@@ -129,7 +129,7 @@ function data()
         'id'   => $prefix . 'venue_locality',
         'type' => 'text',
         'description' =>
-            __('The town or city of the event&rsquo;s principal venue.', 'pcc-framework'),
+        __('The town or city of the event&rsquo;s principal venue.', 'pcc-framework'),
     ]);
 
     $cmb->add_field([
@@ -137,7 +137,7 @@ function data()
         'id'   => $prefix . 'venue_region',
         'type' => 'text',
         'description' =>
-            __('The province, state, or region of the event&rsquo;s principal venue.', 'pcc-framework'),
+        __('The province, state, or region of the event&rsquo;s principal venue.', 'pcc-framework'),
     ]);
 
     $cmb->add_field([
@@ -145,7 +145,7 @@ function data()
         'id'   => $prefix . 'venue_postal_code',
         'type' => 'text',
         'description' =>
-            __('The postal code of the event&rsquo;s principal venue.', 'pcc-framework'),
+        __('The postal code of the event&rsquo;s principal venue.', 'pcc-framework'),
     ]);
 
     $cmb->add_field([
@@ -155,7 +155,7 @@ function data()
         'default' => 'US',
         'options' => $countries,
         'description' =>
-            __('The country of the event&rsquo;s principal venue.', 'pcc-framework'),
+        __('The country of the event&rsquo;s principal venue.', 'pcc-framework'),
     ]);
 
     $cmb->add_field([
@@ -165,7 +165,7 @@ function data()
         'protocols' => ['http', 'https'],
         'show_on_cb' => 'PCCFramework\PostTypes\Event\is_parent_event',
         'description' =>
-            __('A hyperlink to the event&rsquo;s external registration page.', 'pcc-framework'),
+        __('A hyperlink to the event&rsquo;s external registration page.', 'pcc-framework'),
     ]);
 
     $cmb->add_field([
@@ -179,10 +179,11 @@ function data()
             'conference' => __('PCC Conference', 'pcc-framework'),
             'pcc' => __('PCC Event', 'pcc-framework'),
             'icde' => __('ICDE Event', 'pcc-framework'),
+            'course' => __('Course', 'pcc-framework'),
         ],
         'show_on_cb' => 'PCCFramework\PostTypes\Event\is_parent_event',
         'description' =>
-            __('The type of event.', 'pcc-framework'),
+        __('The type of event.', 'pcc-framework'),
     ]);
 
     $cmb->add_field([
@@ -201,7 +202,7 @@ function data()
     $cmb->add_field([
         'name' => __('Participants', 'pcc-framework'),
         'desc' =>
-            'Participants will be shown alphabetically on the participants page.',
+        'Participants will be shown alphabetically on the participants page.',
         'id'   => $prefix . 'participants',
         'type' => 'select',
         'show_option_none' => true,
@@ -215,7 +216,7 @@ function data()
     $cmb->add_field([
         'name' => __('Featured Participants', 'pcc-framework'),
         'desc' =>
-            'Featured participants will be shown in this order on the main event page.',
+        'Featured participants will be shown in this order on the main event page.',
         'id'   => $prefix . 'featured_participants',
         'type' => 'select',
         'show_option_none' => true,
@@ -224,6 +225,67 @@ function data()
         'text' => [
             'add_row_text' => __('Add Featured Participant', 'pcc-framework'),
         ]
+    ]);
+
+    $cmb_oc = new_cmb2_box([
+        'id'            => 'event_oc',
+        'title'         => __('Open Collective', 'pcc-framework'),
+        'object_types'  => ['pcc-event'],
+        'context'       => 'normal',
+        'priority'      => 'high',
+        'show_names'    => true,
+    ]);
+
+    $cmb_oc->add_field([
+        'name' => __('Paid event?', 'pcc-framework'),
+        'id' => $prefix . 'oc_paid',
+        'type' => 'checkbox',
+        'description' =>
+        __('Check this option if the event can only be accessed after purchasing access to it.', 'pcc-framework'),
+    ]);
+
+    $cmb_oc->add_field([
+        'name' => __('Open Collective event ID', 'pcc-framework'),
+        'id' => $prefix . 'oc_id',
+        'type' => 'text_medium',
+        'description' =>
+        __('You can leave it blank if you want to use the default event ID.<br/> (This ID is the same one used to import the list of users through the CSV file).', 'pcc-framework'),
+    ]);
+
+    $cmb_oc->add_field([
+        'name' => __('Collective slug', 'pcc-framework'),
+        'id' => $prefix . 'oc_collective_slug',
+        'type' => 'text_medium',
+    ]);
+
+    $cmb_oc->add_field([
+        'name' => __('Collective button type', 'pcc-framework'),
+        'id' => $prefix . 'oc_button_type',
+        'type'             => 'radio',
+        'show_option_none' => false,
+        'options'          => array(
+            'contribute' => __('Contribute', 'pcc-framework'),
+            'donate' => __('Donate', 'pcc-framework'),
+        ),
+        'default' => 'contribute',
+    ]);
+
+    $cmb_oc->add_field([
+        'name' => __('Collective button color', 'pcc-framework'),
+        'id' => $prefix . 'oc_button_color',
+        'type'             => 'radio',
+        'show_option_none' => false,
+        'options'          => array(
+            'white' => __('White', 'pcc-framework'),
+            'blue' => __('Blue', 'pcc-framework'),
+        ),
+        'default' => 'white',
+    ]);
+
+    $cmb_oc->add_field([
+        'name' => __('Content before the payment link', 'pcc-framework'),
+        'id' => $prefix . 'oc_content_before_link',
+        'type' => 'wysiwyg',
     ]);
 }
 
