@@ -29,8 +29,10 @@ function read_csv()
 
             $email_index = array_search('email', $csv_headers);
 
-            if ($email_index === false) {
-                return __('Column "email" not found!', 'pcc-framework');
+            if ($email_index == false) {
+                return [
+                    'errors' => [__('Column "email" not found!', 'pcc-framework')]
+                ];
             }
 
             $username_index = array_search('username', $csv_headers);
