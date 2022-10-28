@@ -24,8 +24,8 @@ function read_csv()
             $csv_file = fopen($_FILES['import_file']['tmp_name'], 'r');
 
             $delimiter = detect_delimiter($_FILES['import_file']['tmp_name']);
-            $csv_headers = fgetcsv($csv_file, null, $delimiter);
 
+            $csv_headers = fgetcsv($csv_file, 0, $delimiter);
 
             $email_index = array_search('email', $csv_headers);
 
@@ -38,7 +38,7 @@ function read_csv()
             $last_name_index = array_search('last_name', $csv_headers);
             $event_id_index = array_search('event_id', $csv_headers);
 
-            while (($csv_data = fgetcsv($csv_file)) !== FALSE) :
+            while (($csv_data = fgetcsv($csv_file, 0, $delimiter)) !== FALSE) :
                 $csv_data = array_map("utf8_encode", $csv_data);
 
                 $email = trim($csv_data[$email_index]);
