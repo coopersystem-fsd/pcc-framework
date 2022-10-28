@@ -53,7 +53,7 @@ function read_csv()
 
                 if ($user_id = email_exists($email)) {
                     if ($is_valid_event_id) {
-                        $event_ids = empty(get_user_meta($user_id, 'event_ids', true)) ? get_user_meta($user_id, 'event_ids', true) : [];
+                        $event_ids = !empty(get_user_meta($user_id, 'event_ids', true)) ? get_user_meta($user_id, 'event_ids', true) : [];
 
                         if (in_array($event_id, $event_ids)) {
                             $warnings[] = __("'$email' already registered in event ID $event_id", 'pcc-framework');
@@ -358,7 +358,7 @@ function removeslashes($string)
 add_filter('update_user_metadata', function ($check, $user_id, $meta_key, $meta_value) {
 
     if ($meta_key == 'event_ids') {
-        $current_user_events = empty(get_user_meta($user_id, 'event_ids', true)) ? get_user_meta($user_id, 'event_ids', true) : [];
+        $current_user_events = !empty(get_user_meta($user_id, 'event_ids', true)) ? get_user_meta($user_id, 'event_ids', true) : [];
         $new_events = array_diff($meta_value, $current_user_events);
 
         if (count($new_events) > 0) {
