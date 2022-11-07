@@ -1,21 +1,39 @@
 (function($) {
-    $('input[name=pcc_event_oc_event_link]').change((event) => {
+    
+    let $inputEventUrl = $('input[name=pcc_event_oc_event_link]');
+    let $inputEventId = $('input[name=pcc_event_oc_event_id]');
+    let $inputEventEmbedUrl = $('input[name=pcc_event_oc_event_embed_link]');
+
+    $inputEventUrl.change((event) => {
         let inputValue = event.target.value;
+        $inputEventEmbedUrl.val('');
 
         if(/^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i.test(inputValue)){
 
-            inputValue = inputValue.replace('https://opencollective.com/','');
             let urlArray = inputValue.split('/');
+            let eventSlugIndex = urlArray.indexOf('events') + 1;
+            let tierSlugIndex = urlArray.indexOf('contribute') + 1;
             
-            if (urlArray.indexOf('events') > -1) {
-                let eventSlug = urlArray[urlArray.indexOf('events') + 1];
-                let eventJsonUrl = `https://opencollective.com/${urlArray[0]}/events/${eventSlug}.json`;
+            if (eventSlugIndex > 0) {
+                let eventSlug = urlArray[eventSlugIndex];
+
+                if (tierSlugIndex > 0 && urlArray[tierSlugIndex] !== undefined && urlArray[tierSlugIndex] !== '') {
+                    let tierSlug = urlArray[tierSlugIndex];
+                    let embedLink = `https://opencollective.com/embed/${eventSlug}/contribute/${tierSlug}`;
+
+                    $inputEventEmbedUrl.val(embedLink);
+                }
                 
-                $.getJSON(eventJsonUrl, (data) => {
-                    if ('id' in data) {
-                        $('input[name=pcc_event_oc_event_id]').val(data.id);
-                    }
-                });
+                /**
+                 * TODO: Check which ID will be used: the Event ID or Tier ID
+                 */
+                // let eventJsonUrl = `https://opencollective.com/${urlArray[0]}/events/${eventSlug}.json`;
+                
+                // $.getJSON(eventJsonUrl, (data) => {
+                //     if ('id' in data) {
+                //         $inputEventId.val(data.id);
+                //     }
+                // });
             }
         }
         

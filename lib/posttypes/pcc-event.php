@@ -248,7 +248,14 @@ function data()
         'name' => __('Event URL', 'pcc-framework'),
         'id' => $prefix . 'oc_event_link',
         'type' => 'text',
+        'description' =>
+        __('In order for the link to be displayed correctly as an embed link, it must obey the following structure: <br />"https://opencollective.com/{{colective-name}}/events/{{event-name-abcd01234}}/contribute/{{tier-name-00000}}"<br />Ex.: https://opencollective.com/platform-cooperativism-pcc/events/platform-coops-event/contribute/general-access-ticket-98765', 'pcc-framework'),
     ]);
+
+    $cmb_oc->add_field( array(
+        'id'   => $prefix . 'oc_event_embed_link',
+        'type' => 'hidden',
+    ));
 
     $cmb_oc->add_field([
         'name' => __('Open Collective event ID', 'pcc-framework'),
