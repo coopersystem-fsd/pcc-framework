@@ -40,13 +40,17 @@ function user_settings()
 function user_event_list($query_args)
 {
 
-    $args = [
+    $args = array(
+        'meta_key' => 'pcc_event_oc_paid_event',
+        'meta_value' => 'on',
         'post_type' => 'pcc-event',
-        'numberposts' => -1
-    ];
-
-    $posts = query_posts($args);
-
+        'post_status' => 'any',
+        'posts_per_page' => -1,
+        'orderby' => 'date',
+        'order' => 'DESC',
+    );
+    $posts = get_posts($args);
+    
     $post_options = array();
     if ($posts) {
         foreach ($posts as $post) {
@@ -54,7 +58,7 @@ function user_event_list($query_args)
         }
     }
 
-    wp_reset_query();
+    wp_reset_postdata();
 
     return $post_options;
 }

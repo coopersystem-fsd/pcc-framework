@@ -238,48 +238,31 @@ function data()
 
     $cmb_oc->add_field([
         'name' => __('Paid event?', 'pcc-framework'),
-        'id' => $prefix . 'oc_paid',
+        'id' => $prefix . 'oc_paid_event',
         'type' => 'checkbox',
         'description' =>
         __('Check this option if the event can only be accessed after purchasing access to it.', 'pcc-framework'),
     ]);
 
     $cmb_oc->add_field([
+        'name' => __('Event URL', 'pcc-framework'),
+        'id' => $prefix . 'oc_event_link',
+        'type' => 'text',
+        'description' =>
+        __('In order for the link to be displayed correctly as an embed link, it must obey the following structure: <br />"https://opencollective.com/{{colective-name}}/events/{{event-name-abcd01234}}/contribute/{{tier-name-00000}}"<br />Ex.: https://opencollective.com/platform-cooperativism-pcc/events/platform-coops-event/contribute/general-access-ticket-98765', 'pcc-framework'),
+    ]);
+
+    $cmb_oc->add_field( array(
+        'id'   => $prefix . 'oc_event_embed_link',
+        'type' => 'hidden',
+    ));
+
+    $cmb_oc->add_field([
         'name' => __('Open Collective event ID', 'pcc-framework'),
-        'id' => $prefix . 'oc_id',
+        'id' => $prefix . 'oc_event_id',
         'type' => 'text_medium',
         'description' =>
-        __('You can leave it blank if you want to use the default event ID.<br/> (This ID is the same one used to import the list of users through the CSV file).', 'pcc-framework'),
-    ]);
-
-    $cmb_oc->add_field([
-        'name' => __('Collective slug', 'pcc-framework'),
-        'id' => $prefix . 'oc_collective_slug',
-        'type' => 'text_medium',
-    ]);
-
-    $cmb_oc->add_field([
-        'name' => __('Collective button type', 'pcc-framework'),
-        'id' => $prefix . 'oc_button_type',
-        'type'             => 'radio',
-        'show_option_none' => false,
-        'options'          => array(
-            'contribute' => __('Contribute', 'pcc-framework'),
-            'donate' => __('Donate', 'pcc-framework'),
-        ),
-        'default' => 'contribute',
-    ]);
-
-    $cmb_oc->add_field([
-        'name' => __('Collective button color', 'pcc-framework'),
-        'id' => $prefix . 'oc_button_color',
-        'type'             => 'radio',
-        'show_option_none' => false,
-        'options'          => array(
-            'white' => __('White', 'pcc-framework'),
-            'blue' => __('Blue', 'pcc-framework'),
-        ),
-        'default' => 'white',
+        __('You can leave it blank if you want to use the Wordpress Post ID.<br/> (This ID is the same one used to import the list of users through the CSV file).', 'pcc-framework'),
     ]);
 
     $cmb_oc->add_field([
