@@ -335,6 +335,100 @@ function sponsors()
     ]);
 }
 
+
+/**
+ * Registers the Event Classes metabox and meta fields.
+ *
+ * @return null
+ */
+function classes()
+{
+    $prefix = 'pcc_event_';
+
+    $cmb = new_cmb2_box([
+        'id'            => 'event_classes',
+        'title'         => __('Course classes', 'pcc-framework'),
+        'object_types'  => ['pcc-event'],
+        'context'       => 'normal',
+        'priority'      => 'high',
+        'show_names'    => true,
+        'show_on_cb'    => 'PCCFramework\PostTypes\Event\is_parent_event'
+    ]);
+
+    $class_id = $cmb->add_field([
+        'id' => $prefix . 'classes',
+        'type' => 'group',
+        'options' => [
+            'group_title' => __('Class {#}', 'pcc-framework'),
+            'add_button' => __('Add Class', 'pcc-framework'),
+            'remove_button' => __('Remove Class', 'pcc-framework'),
+            'sortable' => true,
+        ],
+    ]);
+
+    $cmb->add_group_field($class_id, [
+        'name' => __('Class title', 'pcc-framework'),
+        'id'   => 'title',
+        'type' => 'text',
+    ]);
+
+    $cmb->add_group_field($class_id, [
+        'name' => __('Date', 'pcc-framework'),
+        'id' => 'date',
+        'type' => 'text_date',
+    ]);
+
+    $cmb->add_group_field($class_id, [
+        'name' => __('Start time', 'pcc-framework'),
+        'id' => 'start_time',
+        'type' => 'text_time',
+    ]);
+
+    $cmb->add_group_field($class_id, [
+        'name' => __('End time', 'pcc-framework'),
+        'id' => 'end_time',
+        'type' => 'text_time',
+    ]);
+
+    $cmb->add_group_field($class_id, [
+        'name' => __('Instructor', 'pcc-framework'),
+        'id'   => 'instructor',
+        'type' => 'select',
+        'show_option_none' => true,
+        'options' => get_people(),
+    ]);
+
+    // $cmb->add_group_field($class_id, [
+    //     'name' => __('Instructors', 'pcc-framework'),
+    //     'id'   => 'instructors',
+    //     'type' => 'select',
+    //     'show_option_none' => true,
+    //     'options' => get_people(),
+    //     'repeatable' => true,
+    //     'text' => [
+    //         'add_row_text' => __('Add instructor', 'pcc-framework'),
+    //     ]
+    // ]);
+
+    // Not working
+    // $cmb->add_group_field($class_id, [
+    //     'name' => __('Topics', 'pcc-framework'),
+    //     'id'   => 'topics',
+    //     'type' => 'wysiwyg',
+    //     'show_option_none' => true,
+    // ]);
+
+    $cmb->add_group_field($class_id, [
+        'name' => __('Topics', 'pcc-framework'),
+        'id'   => 'topics',
+        'type' => 'text',
+        'repeatable' => true,
+        'text' => [
+            'add_row_text' => __('Add topic', 'pcc-framework'),
+        ]
+    ]);
+}
+
 /**
  * Determine if event is a parent or a child (for CMB2's `show_on` callback).
  *
