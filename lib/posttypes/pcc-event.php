@@ -204,6 +204,7 @@ function data()
             'instructor' => __('Instructor', 'pcc-framework'),
             'coach' => __('Coach', 'pcc-framework'),
         ),
+        'show_on_cb' => 'PCCFramework\PostTypes\Event\is_parent_event',
         'attributes'    => array(
             'data-conditional-id'     => $prefix . 'type',
             'data-conditional-value'  => wp_json_encode(array('course', 'past_course')),
@@ -258,6 +259,7 @@ function data()
         'context'       => 'normal',
         'priority'      => 'high',
         'show_names'    => true,
+        'show_on_cb' => 'PCCFramework\PostTypes\Event\is_parent_event',
     ]);
 
     $cmb_oc->add_field([
