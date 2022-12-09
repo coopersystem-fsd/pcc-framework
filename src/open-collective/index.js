@@ -11,10 +11,13 @@
         if(/^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i.test(inputValue)){
 
             let urlArray = inputValue.split('/');
+            let isEmbedUrl = urlArray.indexOf('embed') > -1;
             let eventSlugIndex = urlArray.indexOf('events') + 1;
             let tierSlugIndex = urlArray.indexOf('contribute') + 1;
-            
-            if (eventSlugIndex > 0) {
+
+            if (isEmbedUrl) {
+                $inputEventEmbedUrl.val(inputValue);
+            }else if (eventSlugIndex > 0) {
                 let eventSlug = urlArray[eventSlugIndex];
 
                 if (tierSlugIndex > 0 && urlArray[tierSlugIndex] !== undefined && urlArray[tierSlugIndex] !== '') {
