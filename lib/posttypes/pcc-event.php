@@ -109,6 +109,16 @@ function data()
     ]);
 
     $cmb->add_field([
+        'name' => __('Time zone', 'pcc-framework'),
+        'id' => $prefix . 'timezone',
+        'type' => 'select',
+        'options' => array(
+            'EST' => __('EST', 'pcc-framework'),
+            'EDT' => __('EDT', 'pcc-framework'),
+        ),
+    ]);
+
+    $cmb->add_field([
         'name' => __('Venue Name', 'pcc-framework'),
         'id'   => $prefix . 'venue',
         'type' => 'textarea_small',
@@ -184,6 +194,20 @@ function data()
         'show_on_cb' => 'PCCFramework\PostTypes\Event\is_parent_event',
         'description' =>
         __('The type of event.', 'pcc-framework'),
+    ]);
+
+    $cmb->add_field([
+        'name' => __('Instructor/Coach', 'pcc-framework'),
+        'id' => $prefix . 'instructor_type',
+        'type' => 'select',
+        'options' => array(
+            'instructor' => __('Instructor', 'pcc-framework'),
+            'coach' => __('Coach', 'pcc-framework'),
+        ),
+        'attributes'    => array(
+            'data-conditional-id'     => $prefix . 'type',
+            'data-conditional-value'  => wp_json_encode(array('course', 'past_course')),
+        ),
     ]);
 
     $cmb->add_field([
@@ -265,11 +289,6 @@ function data()
         __('You can leave it blank if you want to use the Wordpress Post ID.<br/> (This ID is the same one used to import the list of users through the CSV file).', 'pcc-framework'),
     ]);
 
-    $cmb_oc->add_field([
-        'name' => __('Content before the payment link', 'pcc-framework'),
-        'id' => $prefix . 'oc_content_before_link',
-        'type' => 'wysiwyg',
-    ]);
 }
 
 /**
@@ -332,6 +351,80 @@ function sponsors()
             ]
         ],
         'preview_size' => 'medium',
+    ]);
+}
+
+
+/**
+ * Registers the Event Classes metabox and meta fields.
+ *
+ * @return null
+ */
+function classes()
+{
+    $prefix = 'pcc_event_';
+
+    $cmb = new_cmb2_box([
+        'id'            => 'event_classes',
+        'title'         => __('Course classes', 'pcc-framework'),
+        'object_types'  => ['pcc-event'],
+        'context'       => 'normal',
+        'priority'      => 'high',
+        'show_names'    => true,
+        'show_on_cb'    => 'PCCFramework\PostTypes\Event\is_parent_event'
+    ]);
+
+    $class_id = $cmb->add_field([
+        'id' => $prefix . 'classes',
+        'type' => 'group',
+        'options' => [
+            'group_title' => __('Class {#}', 'pcc-framework'),
+            'add_button' => __('Add Class', 'pcc-framework'),
+            'remove_button' => __('Remove Class', 'pcc-framework'),
+            'sortable' => true,
+        ],
+    ]);
+
+    $cmb->add_group_field($class_id, [
+        'name' => __('Class title', 'pcc-framework'),
+        'id'   => 'title',
+        'type' => 'text',
+    ]);
+
+    $cmb->add_group_field($class_id, [
+        'name' => __('Date', 'pcc-framework'),
+        'id' => 'date',
+        'type' => 'text_date',
+    ]);
+
+    $cmb->add_group_field($class_id, [
+        'name' => __('Start time', 'pcc-framework'),
+        'id' => 'start_time',
+        'type' => 'text_time',
+    ]);
+
+    $cmb->add_group_field($class_id, [
+        'name' => __('End time', 'pcc-framework'),
+        'id' => 'end_time',
+        'type' => 'text_time',
+    ]);
+
+    $cmb->add_group_field($class_id, [
+        'name' => __('Instructor', 'pcc-framework'),
+        'id'   => 'instructor',
+        'type' => 'select',
+        'show_option_none' => true,
+        'options' => get_people(),
+    ]);
+
+    $cmb->add_group_field($class_id, [
+        'name' => __('Topics', 'pcc-framework'),
+        'id'   => 'topics',
+        'type' => 'text',
+        'repeatable' => true,
+        'text' => [
+            'add_row_text' => __('Add topic', 'pcc-framework'),
+        ]
     ]);
 }
 
