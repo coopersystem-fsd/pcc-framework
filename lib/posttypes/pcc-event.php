@@ -180,10 +180,22 @@ function data()
             'pcc' => __('PCC Event', 'pcc-framework'),
             'icde' => __('ICDE Event', 'pcc-framework'),
             'course' => __('Course', 'pcc-framework'),
+            'past_course' => __('Past Course', 'pcc-framework'),
         ],
         'show_on_cb' => 'PCCFramework\PostTypes\Event\is_parent_event',
         'description' =>
         __('The type of event.', 'pcc-framework'),
+    ]);
+
+    $cmb->add_field([
+        'name' => __('Price', 'pcc-framework'),
+        'id'   => $prefix . 'price',
+        'type' => 'text',
+        'show_option_none' => false,
+        'default' => '',
+        'show_on_cb' => 'PCCFramework\PostTypes\Event\is_parent_event',
+        'description' =>
+        __('The price of event.', 'pcc-framework'),
     ]);
 
     $cmb->add_field([
