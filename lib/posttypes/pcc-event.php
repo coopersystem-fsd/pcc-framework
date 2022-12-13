@@ -119,11 +119,28 @@ function data()
     ]);
 
     $cmb->add_field([
+        'name' => __('Format', 'pcc-framework'),
+        'id' => $prefix . 'format',
+        'type' => 'radio',
+        'default' => 'not_online',
+        'options' => array(
+            'not_online' => __('Face-to-face', 'pcc-framework'),
+            'async' => __('Online Asynchronous', 'pcc-framework'),
+            'sync' => __('Online Synchronous', 'pcc-framework'),
+            'async_sync' => __('Online Asynchronous and Synchronous', 'pcc-framework'),
+        ),
+    ]);
+
+    $cmb->add_field([
         'name' => __('Venue Name', 'pcc-framework'),
         'id'   => $prefix . 'venue',
         'type' => 'textarea_small',
         'description' =>
         __('The name of the event&rsquo;s principal venue.', 'pcc-framework'),
+        'attributes'    => array(
+            'data-conditional-id'     => $prefix . 'format',
+            'data-conditional-value'  => 'not_online',
+        ),
     ]);
 
     $cmb->add_field([
@@ -132,6 +149,10 @@ function data()
         'type' => 'text',
         'description' =>
         __('The street address of the event&rsquo;s principal venue.', 'pcc-framework'),
+        'attributes'    => array(
+            'data-conditional-id'     => $prefix . 'format',
+            'data-conditional-value'  => 'not_online',
+        ),
     ]);
 
     $cmb->add_field([
@@ -140,6 +161,10 @@ function data()
         'type' => 'text',
         'description' =>
         __('The town or city of the event&rsquo;s principal venue.', 'pcc-framework'),
+        'attributes'    => array(
+            'data-conditional-id'     => $prefix . 'format',
+            'data-conditional-value'  => 'not_online',
+        ),
     ]);
 
     $cmb->add_field([
@@ -148,6 +173,10 @@ function data()
         'type' => 'text',
         'description' =>
         __('The province, state, or region of the event&rsquo;s principal venue.', 'pcc-framework'),
+        'attributes'    => array(
+            'data-conditional-id'     => $prefix . 'format',
+            'data-conditional-value'  => 'not_online',
+        ),
     ]);
 
     $cmb->add_field([
@@ -156,6 +185,10 @@ function data()
         'type' => 'text',
         'description' =>
         __('The postal code of the event&rsquo;s principal venue.', 'pcc-framework'),
+        'attributes'    => array(
+            'data-conditional-id'     => $prefix . 'format',
+            'data-conditional-value'  => 'not_online',
+        ),
     ]);
 
     $cmb->add_field([
@@ -166,6 +199,10 @@ function data()
         'options' => $countries,
         'description' =>
         __('The country of the event&rsquo;s principal venue.', 'pcc-framework'),
+        'attributes'    => array(
+            'data-conditional-id'     => $prefix . 'format',
+            'data-conditional-value'  => 'not_online',
+        ),
     ]);
 
     $cmb->add_field([
@@ -216,6 +253,7 @@ function data()
             'instructor' => __('Instructor', 'pcc-framework'),
             'coach' => __('Coach', 'pcc-framework'),
         ),
+        'show_on_cb' => 'PCCFramework\PostTypes\Event\is_parent_event',
         'attributes'    => array(
             'data-conditional-id'     => $prefix . 'type',
             'data-conditional-value'  => wp_json_encode(array('course', 'past_course')),
@@ -270,6 +308,7 @@ function data()
         'context'       => 'normal',
         'priority'      => 'high',
         'show_names'    => true,
+        'show_on_cb' => 'PCCFramework\PostTypes\Event\is_parent_event',
     ]);
 
     $cmb_oc->add_field([
