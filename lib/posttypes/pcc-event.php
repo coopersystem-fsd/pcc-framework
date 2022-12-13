@@ -83,6 +83,16 @@ function data()
         $countries[$country->getCountryCode()] = $country->getName();
     }
 
+    $languages = [
+        'en'=> 'English',
+        'pt'=> 'Portuguese',
+        'es'=> 'Spanish',
+        'it'=> 'Italian',
+        'tr'=> 'Turkish',
+        'ch'=> 'Chinese',
+        'th'=> 'Thai',
+    ];
+
     $cmb = new_cmb2_box([
         'id'            => 'event_data',
         'title'         => __('Event Data', 'pcc-framework'),
@@ -128,6 +138,32 @@ function data()
             'async' => __('Online Asynchronous', 'pcc-framework'),
             'sync' => __('Online Synchronous', 'pcc-framework'),
             'async_sync' => __('Online Asynchronous and Synchronous', 'pcc-framework'),
+        ),
+    ]);
+
+    $cmb->add_field([
+        'name' => __('Language', 'pcc-framework'),
+        'id' => $prefix . 'language',
+        'type' => 'select',
+        'default' => 'en',
+        'options' => $languages,
+        'attributes'    => array(
+            'data-conditional-id'     => $prefix . 'format',
+            'data-conditional-value'  => wp_json_encode(array('async', 'sync', 'async_sync')),
+        ),
+    ]);
+
+    $cmb->add_field([
+        'name' => __('Second language (optional)', 'pcc-framework'),
+        'id' => $prefix . 'second_language',
+        'type' => 'select',
+        'default' => 'none',
+        'options' => array_merge(['none' => 'None'], $languages),
+        'description' =>
+        __('(Live translation)', 'pcc-framework'),
+        'attributes'    => array(
+            'data-conditional-id'     => $prefix . 'format',
+            'data-conditional-value'  => wp_json_encode(array('async', 'sync', 'async_sync')),
         ),
     ]);
 
