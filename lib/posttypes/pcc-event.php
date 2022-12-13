@@ -83,6 +83,16 @@ function data()
         $countries[$country->getCountryCode()] = $country->getName();
     }
 
+    $languages = [
+        'en'=> 'English',
+        'pt'=> 'Portuguese',
+        'es'=> 'Spanish',
+        'it'=> 'Italian',
+        'tr'=> 'Turkish',
+        'ch'=> 'Chinese',
+        'th'=> 'Thai',
+    ];
+
     $cmb = new_cmb2_box([
         'id'            => 'event_data',
         'title'         => __('Event Data', 'pcc-framework'),
@@ -132,9 +142,49 @@ function data()
     ]);
 
     $cmb->add_field([
+        'name' => __('Language', 'pcc-framework'),
+        'id' => $prefix . 'language',
+        'type' => 'select',
+        'default' => 'en',
+        'options' => $languages,
+        'show_on_cb' => 'PCCFramework\PostTypes\Event\is_parent_event',
+        'attributes'    => array(
+            'data-conditional-id'     => $prefix . 'format',
+            'data-conditional-value'  => wp_json_encode(array('async', 'sync', 'async_sync')),
+        ),
+    ]);
+
+    $cmb->add_field([
+        'name' => __('Second language (optional)', 'pcc-framework'),
+        'id' => $prefix . 'second_language',
+        'type' => 'select',
+        'default' => 'none',
+        'options' => array_merge(['none' => 'None'], $languages),
+        'show_on_cb' => 'PCCFramework\PostTypes\Event\is_parent_event',
+        'description' =>
+        __('(Live translation)', 'pcc-framework'),
+        'attributes'    => array(
+            'data-conditional-id'     => $prefix . 'format',
+            'data-conditional-value'  => wp_json_encode(array('async', 'sync', 'async_sync')),
+        ),
+    ]);
+
+    $cmb->add_field([
+        'name' => __('Certificate course', 'pcc-framework'),
+        'id' => $prefix . 'certificate',
+        'type' => 'checkbox',
+        'show_on_cb' => 'PCCFramework\PostTypes\Event\is_parent_event',
+        'attributes'    => array(
+            'data-conditional-id'     => $prefix . 'format',
+            'data-conditional-value'  => wp_json_encode(array('async', 'sync', 'async_sync')),
+        ),
+    ]);
+
+    $cmb->add_field([
         'name' => __('Venue Name', 'pcc-framework'),
         'id'   => $prefix . 'venue',
         'type' => 'textarea_small',
+        'show_on_cb' => 'PCCFramework\PostTypes\Event\not_parent_online_format',
         'description' =>
         __('The name of the event&rsquo;s principal venue.', 'pcc-framework'),
         'attributes'    => array(
@@ -147,6 +197,7 @@ function data()
         'name' => __('Venue Street Address', 'pcc-framework'),
         'id'   => $prefix . 'venue_street_address',
         'type' => 'text',
+        'show_on_cb' => 'PCCFramework\PostTypes\Event\not_parent_online_format',
         'description' =>
         __('The street address of the event&rsquo;s principal venue.', 'pcc-framework'),
         'attributes'    => array(
@@ -159,6 +210,7 @@ function data()
         'name' => __('Venue Town/City', 'pcc-framework'),
         'id'   => $prefix . 'venue_locality',
         'type' => 'text',
+        'show_on_cb' => 'PCCFramework\PostTypes\Event\not_parent_online_format',
         'description' =>
         __('The town or city of the event&rsquo;s principal venue.', 'pcc-framework'),
         'attributes'    => array(
@@ -171,6 +223,7 @@ function data()
         'name' => __('Venue Region', 'pcc-framework'),
         'id'   => $prefix . 'venue_region',
         'type' => 'text',
+        'show_on_cb' => 'PCCFramework\PostTypes\Event\not_parent_online_format',
         'description' =>
         __('The province, state, or region of the event&rsquo;s principal venue.', 'pcc-framework'),
         'attributes'    => array(
@@ -183,6 +236,7 @@ function data()
         'name' => __('Venue Postal Code', 'pcc-framework'),
         'id'   => $prefix . 'venue_postal_code',
         'type' => 'text',
+        'show_on_cb' => 'PCCFramework\PostTypes\Event\not_parent_online_format',
         'description' =>
         __('The postal code of the event&rsquo;s principal venue.', 'pcc-framework'),
         'attributes'    => array(
@@ -197,6 +251,7 @@ function data()
         'type' => 'select',
         'default' => 'US',
         'options' => $countries,
+        'show_on_cb' => 'PCCFramework\PostTypes\Event\not_parent_online_format',
         'description' =>
         __('The country of the event&rsquo;s principal venue.', 'pcc-framework'),
         'attributes'    => array(
@@ -489,4 +544,24 @@ function classes()
 function is_parent_event($cmb)
 {
     return empty(get_post_ancestors($cmb->object_id));
+}
+
+/**
+ * Determine if event is a child and if parent is an online format (for CMB2's `show_on` callback).
+ *
+ * @param mixed $cmb The CMB2 meta box.
+ *
+ * @return bool
+ */
+function not_parent_online_format($cmb)
+{
+    $event_formats = ['async', 'sync','async_sync'];
+    $event_parents = get_post_ancestors($cmb->object_id);
+
+    if (!empty($event_parents)) {
+        $parent_id = array_pop($event_parents);
+        $parent_event_format = get_post_meta($parent_id, 'pcc_event_format', true);
+        return !in_array($parent_event_format, $event_formats);
+    }
+    return true;
 }
