@@ -110,6 +110,7 @@ if (is_admin()) {
     add_action('enqueue_block_editor_assets', '\\PCCFramework\\Blocks\\enqueue_block_assets');
     add_action('cmb2_admin_init', '\\PCCFramework\\PostTypes\\Event\\data');
     add_action('cmb2_admin_init', '\\PCCFramework\\PostTypes\\Event\\sponsors');
+    add_action('cmb2_admin_init', '\\PCCFramework\\PostTypes\\Event\\classes');
     add_action('cmb2_admin_init', '\\PCCFramework\\PostTypes\\Person\\data');
     add_action('cmb2_admin_init', '\\PCCFramework\\PostTypes\\Post\\data');
     add_action('cmb2_admin_init', '\\PCCFramework\\PostTypes\\Project\\data');
