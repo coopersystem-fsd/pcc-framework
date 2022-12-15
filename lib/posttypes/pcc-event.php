@@ -367,14 +367,6 @@ function data()
     ]);
 
     $cmb_oc->add_field([
-        'name' => __('Paid event?', 'pcc-framework'),
-        'id' => $prefix . 'oc_paid_event',
-        'type' => 'checkbox',
-        'description' =>
-        __('Check this option if the event can only be accessed after purchasing access to it.', 'pcc-framework'),
-    ]);
-
-    $cmb_oc->add_field([
         'name' => __('Event URL', 'pcc-framework'),
         'id' => $prefix . 'oc_event_link',
         'type' => 'text',
