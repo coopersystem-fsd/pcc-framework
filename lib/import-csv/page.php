@@ -68,10 +68,10 @@ function import_file_tab()
 { ?>
         <div class="card">
             <h2><?php _e('Instructions', 'pcc-framework'); ?></h2>
-            <p><?php _e('Allowed columns: <b>email</b>, <b>event_id</b>, <b>username</b>, <b>fist_name</b>, <b>last_name</b>.', 'pcc-framework'); ?></p>
+            <p><?php _e('Allowed columns: <b>email</b>, <b>event_id</b>, <b>username</b>, <b>first_name</b>, <b>last_name</b>.', 'pcc-framework'); ?></p>
             <p><?php _e('The file <b>MUST</b> have <b>email</b> column for importing users.', 'pcc-framework'); ?></p>
             <p><?php _e('If the <b>event_id</b> column does not exist or if the user does not have an event id in the file, the user will be created but not linked to the event.', 'pcc-framework'); ?></p>
-            <p><?php _e('The columns <b>username</b>, <b>fist_name</b>, <b>last_name</b> are optional.', 'pcc-framework'); ?></p>
+            <p><?php _e('The columns <b>username</b>, <b>first_name</b>, <b>last_name</b> are optional.', 'pcc-framework'); ?></p>
             <p><?php _e('If the <b>username</b> column does not exist, the username will be generated from the email.', 'pcc-framework'); ?></p>
             <form method='post' action='<?= $_SERVER['REQUEST_URI']; ?>' enctype='multipart/form-data'>
                 <p><input type="file" name="import_file"></p>
