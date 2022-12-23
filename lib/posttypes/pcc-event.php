@@ -84,15 +84,29 @@ function data()
     }
 
     $languages = [
+        'af'=> 'Afrikaans',
+        'bi'=> 'Bahasa Indonesia',
+        'ca'=>'Català',
+        'de'=> 'Deutsch',
         'en'=> 'English',
-        'pt'=> 'Portuguese',
-        'es'=> 'Spanish',
-        'it'=> 'Italian',
-        'tr'=> 'Turkish',
-        'ch'=> 'Chinese',
-        'th'=> 'Thai',
+        'es'=> 'Español',
+        'eu'=> 'Euskara',
+        'fr'=> 'Français',
+        'it'=> 'Italiano',
+        'pl'=> 'Polski',
+        'pt'=> 'Português',
+        'fi'=> 'Suomi',
+        'sv'=> 'Svenska',
+        'tr'=> 'Türkçe',
+        'ru'=> 'Русский',
+        'hi'=> 'हिन्दी',
+        'bn'=> 'বাংলা',
+        'gu'=> 'ગુજરાતી',
+        'ml'=> 'മലയാളം',
+        'zh'=> '中文 (香港)',
+        'ja'=> '日本語'
     ];
-
+    
     $cmb = new_cmb2_box([
         'id'            => 'event_data',
         'title'         => __('Event Data', 'pcc-framework'),
