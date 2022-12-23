@@ -37,7 +37,7 @@ function read_csv()
             }
 
             $username_index = array_search('username', $csv_headers);
-            $fist_name_index = array_search('fist_name', $csv_headers);
+            $first_name_index = array_search('first_name', $csv_headers);
             $last_name_index = array_search('last_name', $csv_headers);
             $event_id_index = array_search('event_id', $csv_headers);
 
@@ -81,7 +81,7 @@ function read_csv()
                     'user_pass' => $password,
                     'user_login' => !username_exists($username) ? $username : $username . substr(md5(microtime()),rand(0,26),5),
                     'user_email' => $email,
-                    'first_name' => $fist_name_index ? trim($csv_data[$fist_name_index]) : '',
+                    'first_name' => $first_name_index ? trim($csv_data[$first_name_index]) : '',
                     'last_name' => $last_name_index ? trim($csv_data[$last_name_index]) : '',
                     'show_admin_bar_front' => false,
                     'role' => 'external_user',
