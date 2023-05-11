@@ -41,16 +41,17 @@ function user_event_list($query_args)
 {
 
     $args = array(
-        'meta_key' => 'pcc_event_oc_paid_event',
-        'meta_value' => 'on',
+        'meta_key' => 'pcc_event_type',
+        'meta_value' => ['course', 'past_course'],
         'post_type' => 'pcc-event',
         'post_status' => 'any',
         'posts_per_page' => -1,
         'orderby' => 'date',
         'order' => 'DESC',
+        'post_parent' => 0,
     );
     $posts = get_posts($args);
-    
+
     $post_options = array();
     if ($posts) {
         foreach ($posts as $post) {
